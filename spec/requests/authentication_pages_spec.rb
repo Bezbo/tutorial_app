@@ -167,6 +167,12 @@ describe "authentication" do
         before { post users_path }
         specify { response.should redirect_to(root_path) }
       end
+
+      describe "cannot delete other users post" do
+        let(:other_user) { FactoryGirl.create(:user) }
+        before { visit user_path(other_user) }
+        it { should_not have_link("delete") }
+      end
     end
   end
 end
